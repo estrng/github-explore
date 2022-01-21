@@ -38,6 +38,7 @@ export function Repository() {
 
   function handleIssueNavigation(issueUrl: string) {
     // TODO - use Linking to open issueUrl in a browser
+    Linking.openURL(issueUrl);
   }
 
   return (
@@ -50,41 +51,54 @@ export function Repository() {
             <TitleAnimation>
               {
                 // TODO - full name of the repository
+                repository.full_name
               }
             </TitleAnimation>
 
-            <Description numberOfLines={2}>{
-              //TODO - repository description
-            }</Description>
+            <Description numberOfLines={2}>
+              {
+                //TODO - repository description
+                repository.description
+              }
+            </Description>
           </TextGroup>
         </RepoInfo>
 
         <RepoStats>
           <Stars>
-            <StarsCounter>{
-              // TODO - repository stargazers count
-            }</StarsCounter>
+            <StarsCounter>
+              {
+                // TODO - repository stargazers count
+                repository.stargazers_count
+              }
+            </StarsCounter>
             <StarsText>Stars</StarsText>
           </Stars>
 
           <Forks>
-            <ForksCounter>{
-              // TODO - repository forks count
-            }</ForksCounter>
+            <ForksCounter>
+              {
+                // TODO - repository forks count
+                repository.forks_count
+              }
+            </ForksCounter>
             <ForksText>Forks</ForksText>
           </Forks>
 
           <OpenIssues>
-            <OpenIssuesCounter>{
-              // TODO - repository issues count
-            }</OpenIssuesCounter>
+            <OpenIssuesCounter>
+              {
+                // TODO - repository issues count
+                repository.open_issues_count
+              }
+            </OpenIssuesCounter>
             <OpenIssuesText>Issues{'\n'}Abertas</OpenIssuesText>
           </OpenIssues>
         </RepoStats>
 
         <IssuesList
           data={repository.issues}
-          keyExtractor={issue => String(issue.id)}
+          keyExtractor={(issue) => String(issue.id)}
           showsVerticalScrollIndicator={false}
           renderItem={({ item: issue }) => (
             <Card
@@ -93,11 +107,12 @@ export function Repository() {
                 title: issue.title,
                 subTitle: issue.user.login,
               }}
-            // TODO - onPress prop calling 
+              // TODO - onPress prop calling
+              onPress={() => handleIssueNavigation(issue.html_url)}
             />
           )}
         />
       </Container>
     </Background>
-  )
+  );
 }
